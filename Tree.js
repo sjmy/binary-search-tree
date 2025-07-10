@@ -194,6 +194,7 @@ export default function Tree(array = []) {
   // inOrder, preOrder, postOrder are depth-first
 
   // Visit left subtree, then root, then right subtree
+  // Recursive solution, uses inOrderRecursion to pass in a pointer to root
   function inOrder(callback) {
     if (callback === undefined) {
       throw new Error("Callback function required");
@@ -235,7 +236,25 @@ export default function Tree(array = []) {
   }
 
   // Visit left subtree, then right subtree, then root
-  function postOrder(callback) {}
+  // Recursive solution, uses postOrderRecursion to pass in a pointer to root
+  function postOrder(callback) {
+    if (callback === undefined) {
+      throw new Error("Callback function required");
+    }
+
+    let current = root;
+    postOrderRecursion(current, callback);
+  }
+
+  function postOrderRecursion(node, callback) {
+    if (node === null) {
+      return;
+    }
+
+    postOrderRecursion(node.left, callback);
+    postOrderRecursion(node.right, callback);
+    callback(node);
+  }
 
   // Returns the height of the node containing the given value
   function height(value) {}
@@ -250,5 +269,14 @@ export default function Tree(array = []) {
   // Use a traversal method to provide a new array to the buildTree function
   function rebalance() {}
 
-  return { root, insert, deleteItem, find, levelOrder, preOrder, inOrder };
+  return {
+    root,
+    insert,
+    deleteItem,
+    find,
+    levelOrder,
+    preOrder,
+    inOrder,
+    postOrder,
+  };
 }

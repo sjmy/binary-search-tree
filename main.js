@@ -22,4 +22,4 @@ function printNode(node) {
 }
 
 prettyPrint(tree.root);
-tree.inOrder(printNode);
+tree.postOrder(printNode);

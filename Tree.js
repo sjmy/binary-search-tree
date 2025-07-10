@@ -69,8 +69,77 @@ export default function Tree(array = []) {
   }
 
   // Delete the given value
-  // Deal with several cases for delete, such as when a node has children or not
-  function deleteItem(value) {}
+  // Three cases:
+  // Deleting a leaf node. Set parent to null
+  // Deleting a node with one child. Set parent to node's child, removing the node from the chain
+  // Deleting a node with two children:
+  //  Find the node that is next largest
+  //  Start with nodeToDelete.right, then go left as far as possible and select the last node (savedNode)
+  //  If savedNode has no children:
+  //    "Delete" savedNode by setting its parent.left to null, and use savedNode to replace nodeToDelete by
+  //    copying saveNode.data to nodeToDelete.data
+  //  If savedNode has children:
+  //    We know that savedNode will only have one right tree child
+  //    "Delete" savedNode by setting parent.left to savedNode.right, and use saveNode to replace nodeToDelete by
+  //    copying saveNode.data to nodeToDelete.data
+  function deleteItem(value) {
+    let parent = null;
+    let current = root;
+
+    while (current !== null && current.data !== value) {
+      parent = current;
+
+      if (current.data > value) {
+        current = current.left;
+      } else {
+        current = current.right;
+      }
+    }
+
+    // Value not found
+    if (current === null) {
+      return root;
+    }
+
+    // Check if the node to be deleted has at most one child
+    // This also handles leaf nodes
+    if (current.left === null || current.right === null) {
+      let newCurrent = current.left === null ? current.right : current.left;
+
+      // Check if the node to be deleted is the root
+      if (parent === null) {
+        return newCurrent;
+      }
+
+      // Check if the node to be deleted is parent's left or right child, and then replace this with newCurrent
+      if (current === parent.left) {
+        parent.left = newCurrent;
+      } else {
+        parent.right = newCurrent;
+      }
+    } else {
+      // Node to be deleted has two children
+      let nextLParent = null;
+      let nextLargest = current.right;
+
+      // Find the next largest node
+      while (nextLargest.left !== null) {
+        nextLParent = nextLargest;
+        nextLargest = nextLargest.left;
+      }
+
+      if (nextLParent !== null) {
+        // After we went right, there were left branches
+        nextLParent.left = nextLargest.right;
+      } else {
+        // After we went right, there were no left branches, so we stop
+        current.right = nextLargest.right;
+      }
+
+      // Copy the data, replacing the node to be deleted with the correct node value
+      current.data = nextLargest.data;
+    }
+  }
 
   // Returns the node with the given value
   function find(value) {}
@@ -96,5 +165,5 @@ export default function Tree(array = []) {
   // Use a traversal method to provide a new array to the buildTree function
   function rebalance() {}
 
-  return { root, insert };
+  return { root, insert, deleteItem };
 }

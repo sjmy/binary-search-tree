@@ -160,7 +160,36 @@ export default function Tree(array = []) {
     return "Value not found";
   }
 
-  function levelOrder(callback) {}
+  // Visit all nodes at a level before traversing to a deeper level
+  // FIFO queue
+  // At each discovered node, enqueue its children
+  // Iterative solution
+  function levelOrder(callback) {
+    if (callback === undefined) {
+      throw new Error("Callback function required");
+    }
+
+    if (root === null) {
+      return;
+    }
+
+    let queue = [];
+    let current = root;
+    queue.unshift(current);
+
+    while (queue.length > 0) {
+      current = queue.pop();
+      callback(current);
+
+      if (current.left !== null) {
+        queue.unshift(current.left);
+      }
+
+      if (current.right !== null) {
+        queue.unshift(current.right);
+      }
+    }
+  }
 
   function inOrder(callback) {}
 
@@ -181,5 +210,5 @@ export default function Tree(array = []) {
   // Use a traversal method to provide a new array to the buildTree function
   function rebalance() {}
 
-  return { root, insert, deleteItem, find };
+  return { root, insert, deleteItem, find, levelOrder };
 }

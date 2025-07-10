@@ -157,7 +157,7 @@ export default function Tree(array = []) {
       }
     }
 
-    return "Value not found";
+    return null;
   }
 
   // Visit all nodes at a level before traversing to a deeper level. Breadth-first
@@ -257,12 +257,40 @@ export default function Tree(array = []) {
   }
 
   // Returns the height of the node containing the given value
-  function height(value) {}
+  // Height is defined as the number of edges in the longest path from that node to a leaf node
+  // If the value is not found in the tree, the function should return null
+  // Recursive solution https://www.geeksforgeeks.org/dsa/find-the-maximum-depth-or-height-of-a-tree/
+  function height(value) {
+    let node = find(value);
+
+    if (node === null) {
+      return null;
+    }
+
+    return getHeight(node);
+  }
+
+  function getHeight(node) {
+    if (node === null) {
+      return -1;
+    }
+
+    let leftHeight = getHeight(node.left);
+    let rightHeight = getHeight(node.right);
+
+    return Math.max(leftHeight, rightHeight) + 1;
+  }
 
   // Returns the depth of the node containing the given value
+  // Depth is defined as the number of edges in the path from that node to the root node
+  // If the value is not found in the tree, the function should return null
   function depth(value) {}
 
   // Checks if the tree is balanced
+  // A binary tree is considered balanced if, for every node in the tree,
+  // the height difference between its left and right subtrees is no more than 1,
+  // and both the left and right subtrees are also balanced
+  // Must check the balance condition for every node
   function isBalanced() {}
 
   // Rebalances an unbalanced tree
@@ -278,5 +306,6 @@ export default function Tree(array = []) {
     preOrder,
     inOrder,
     postOrder,
+    height,
   };
 }

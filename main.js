@@ -22,4 +22,3 @@ function printNode(node) {
 }
 
 prettyPrint(tree.root);
-tree.postOrder(printNode);

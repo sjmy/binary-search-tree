@@ -142,7 +142,23 @@ export default function Tree(array = []) {
   }
 
   // Returns the node with the given value
-  function find(value) {}
+  function find(value) {
+    let current = root;
+
+    while (current !== null) {
+      if (current.data === value) {
+        return current;
+      }
+
+      if (current.data > value) {
+        current = current.left;
+      } else {
+        current = current.right;
+      }
+    }
+
+    return "Value not found";
+  }
 
   function levelOrder(callback) {}
 
@@ -165,5 +181,5 @@ export default function Tree(array = []) {
   // Use a traversal method to provide a new array to the buildTree function
   function rebalance() {}
 
-  return { root, insert, deleteItem };
+  return { root, insert, deleteItem, find };
 }

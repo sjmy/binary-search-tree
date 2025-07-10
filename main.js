@@ -17,3 +17,4 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
 };
 
 prettyPrint(tree.root);
+console.log(tree.find(345));

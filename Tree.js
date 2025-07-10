@@ -284,7 +284,53 @@ export default function Tree(array = []) {
   // Returns the depth of the node containing the given value
   // Depth is defined as the number of edges in the path from that node to the root node
   // If the value is not found in the tree, the function should return null
-  function depth(value) {}
+  function depth(value) {
+    let node = find(value);
+
+    if (node === null) {
+      return null;
+    }
+
+    if (node === root) {
+      return 0;
+    }
+
+    // Initialize a queue to traverse the tree level by level
+    // Increment depth after each level
+    // If node is found, return the current depth
+    let depth = 0;
+    let queue = [];
+    let current = root;
+    queue.unshift(current);
+
+    // Loop until the queue is empty
+    while (queue.length > 0) {
+      let levelSize = queue.length;
+
+      // Traverse all nodes at the current level
+      for (let i = 0; i < levelSize; i++) {
+        current = queue.pop();
+
+        // If the node is one of the children, increment and return depth
+        if (current.left === node || current.right === node) {
+          depth++;
+          return depth;
+        }
+
+        if (current.left !== null) {
+          queue.unshift(current.left);
+        }
+
+        if (current.right !== null) {
+          queue.unshift(current.right);
+        }
+      }
+      // Increment depth after traversing a level
+      depth++;
+    }
+
+    return depth - 1;
+  }
 
   // Checks if the tree is balanced
   // A binary tree is considered balanced if, for every node in the tree,
@@ -307,5 +353,6 @@ export default function Tree(array = []) {
     inOrder,
     postOrder,
     height,
+    depth,
   };
 }

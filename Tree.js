@@ -160,7 +160,7 @@ export default function Tree(array = []) {
     return "Value not found";
   }
 
-  // Visit all nodes at a level before traversing to a deeper level
+  // Visit all nodes at a level before traversing to a deeper level. Breadth-first
   // FIFO queue
   // At each discovered node, enqueue its children
   // Iterative solution
@@ -191,10 +191,32 @@ export default function Tree(array = []) {
     }
   }
 
+  // inOrder, preOrder, postOrder are depth-first
+
+  // Visit left subtree, then root, then right subtree
   function inOrder(callback) {}
 
-  function preOrder(callback) {}
+  // Visit root, then left subtree, then right subtree
+  // Recursive solution, uses preOrderRecursion to pass in a pointer to root
+  function preOrder(callback) {
+    if (callback === undefined) {
+      throw new Error("Callback function required");
+    }
 
+    let current = root;
+    preOrderRecursion(current, callback);
+  }
+
+  function preOrderRecursion(node, callback) {
+    if (node === null) {
+      return;
+    }
+    callback(node);
+    preOrderRecursion(node.left, callback);
+    preOrderRecursion(node.right, callback);
+  }
+
+  // Visit left subtree, then right subtree, then root
   function postOrder(callback) {}
 
   // Returns the height of the node containing the given value
@@ -210,5 +232,5 @@ export default function Tree(array = []) {
   // Use a traversal method to provide a new array to the buildTree function
   function rebalance() {}
 
-  return { root, insert, deleteItem, find, levelOrder };
+  return { root, insert, deleteItem, find, levelOrder, preOrder };
 }

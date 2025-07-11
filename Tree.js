@@ -358,7 +358,31 @@ export default function Tree(array = []) {
 
   // Rebalances an unbalanced tree
   // Use a traversal method to provide a new array to the buildTree function
-  function rebalance() {}
+  function rebalance() {
+    if (root === null) {
+      return;
+    }
+
+    let newArray = [];
+    let queue = [];
+    let current = root;
+    queue.unshift(current);
+
+    while (queue.length > 0) {
+      current = queue.pop();
+      newArray.push(current.data);
+
+      if (current.left !== null) {
+        queue.unshift(current.left);
+      }
+
+      if (current.right !== null) {
+        queue.unshift(current.right);
+      }
+    }
+    root = buildTree(newArray);
+    return;
+  }
 
   return {
     root,
@@ -372,5 +396,6 @@ export default function Tree(array = []) {
     height,
     depth,
     isBalanced,
+    rebalance,
   };
 }

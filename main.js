@@ -19,6 +19,7 @@ function printNode(node) {
   console.log(node.data);
 }
 
+// Creates n array of random numbers
 function createRandomArray(n) {
   let array = [];
 
@@ -29,6 +30,7 @@ function createRandomArray(n) {
   return array;
 }
 
+// Testing
 const tree = Tree(createRandomArray(17));
 
 prettyPrint(tree.root);

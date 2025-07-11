@@ -343,9 +343,11 @@ export default function Tree(array = []) {
       return true;
     }
 
+    // Get the heights for the children
     let leftHeight = getHeight(current.left);
     let rightHeight = getHeight(current.right);
 
+    // If the difference is larger than 1, it's unbalanced
     if (
       Math.max(leftHeight, rightHeight) - Math.min(leftHeight, rightHeight) >
       1
@@ -353,6 +355,7 @@ export default function Tree(array = []) {
       return false;
     }
 
+    // If both branches make it to their leaf nodes, it's balanced
     return isBalanced(current.left) && isBalanced(current.right);
   }
 
@@ -363,6 +366,7 @@ export default function Tree(array = []) {
       return;
     }
 
+    // Using the queue idea from levelOrder to traverse and push the data from each node to newArray
     let newArray = [];
     let queue = [];
     let current = root;
@@ -381,6 +385,7 @@ export default function Tree(array = []) {
       }
     }
 
+    // Using this allows the instance's root to be changed
     this.root = buildTree(newArray);
     return;
   }

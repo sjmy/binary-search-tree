@@ -170,12 +170,12 @@ export default function Tree(array = []) {
       throw new Error("Callback function required");
     }
 
-    if (root === null) {
+    if (this.root === null) {
       return;
     }
 
     let queue = [];
-    let current = root;
+    let current = this.root;
     queue.unshift(current);
 
     while (queue.length > 0) {
@@ -201,7 +201,7 @@ export default function Tree(array = []) {
       throw new Error("Callback function required");
     }
 
-    let current = root;
+    let current = this.root;
     inOrderRecursion(current, callback);
   }
 
@@ -222,7 +222,7 @@ export default function Tree(array = []) {
       throw new Error("Callback function required");
     }
 
-    let current = root;
+    let current = this.root;
     preOrderRecursion(current, callback);
   }
 
@@ -243,7 +243,7 @@ export default function Tree(array = []) {
       throw new Error("Callback function required");
     }
 
-    let current = root;
+    let current = this.root;
     postOrderRecursion(current, callback);
   }
 
@@ -338,7 +338,7 @@ export default function Tree(array = []) {
   // the height difference between its left and right subtrees is no more than 1,
   // and both the left and right subtrees are also balanced
   // Must check the balance condition for every node
-  function isBalanced(current = root) {
+  function isBalanced(current = this.root) {
     if (current === null) {
       return true;
     }
@@ -380,7 +380,8 @@ export default function Tree(array = []) {
         queue.unshift(current.right);
       }
     }
-    root = buildTree(newArray);
+
+    this.root = buildTree(newArray);
     return;
   }
 

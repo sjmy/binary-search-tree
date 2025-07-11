@@ -1,7 +1,5 @@
 import Tree from "./Tree.js";
 
-const tree = Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
-
 // Function to help visualize BST
 const prettyPrint = (node, prefix = "", isLeft = true) => {
   if (node === null) {
@@ -21,4 +19,34 @@ function printNode(node) {
   console.log(node.data);
 }
 
+function createRandomArray(n) {
+  let array = [];
+
+  for (let i = 0; i < n; i++) {
+    array.push(Math.floor(Math.random() * 100));
+  }
+
+  return array;
+}
+
+const tree = Tree(createRandomArray(17));
+
 prettyPrint(tree.root);
+console.log(tree.isBalanced());
+
+tree.insert(101);
+tree.insert(102);
+tree.insert(111);
+tree.insert(102);
+tree.insert(131);
+tree.insert(141);
+tree.insert(171);
+
+prettyPrint(tree.root);
+console.log(tree.isBalanced());
+
+tree.rebalance();
+prettyPrint(tree.root);
+console.log(tree.isBalanced());
+
+tree.postOrder(printNode);

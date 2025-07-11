@@ -22,3 +22,4 @@ function printNode(node) {
 }
 
 prettyPrint(tree.root);
+console.log(tree.isBalanced());

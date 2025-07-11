@@ -37,6 +37,7 @@ export default function Tree(array = []) {
   // Do not use the original input array
   // Traverse the tree, manipulate the nodes and connections
   // Used an iterative approach instead of recursive because the root variable is in the module scope
+  // Although, it could be refactored to be recursive if root was passed in as a parameter with a default value
   function insert(value) {
     const tempNode = Node(value);
 
@@ -337,7 +338,23 @@ export default function Tree(array = []) {
   // the height difference between its left and right subtrees is no more than 1,
   // and both the left and right subtrees are also balanced
   // Must check the balance condition for every node
-  function isBalanced() {}
+  function isBalanced(current = root) {
+    if (current === null) {
+      return true;
+    }
+
+    let leftHeight = getHeight(current.left);
+    let rightHeight = getHeight(current.right);
+
+    if (
+      Math.max(leftHeight, rightHeight) - Math.min(leftHeight, rightHeight) >
+      1
+    ) {
+      return false;
+    }
+
+    return isBalanced(current.left) && isBalanced(current.right);
+  }
 
   // Rebalances an unbalanced tree
   // Use a traversal method to provide a new array to the buildTree function
@@ -354,5 +371,6 @@ export default function Tree(array = []) {
     postOrder,
     height,
     depth,
+    isBalanced,
   };
 }
